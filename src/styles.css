@@ -1,0 +1,213 @@
+/* AI ChatNav - Compact two-row floating navigation panel */
+/* Colors use CSS custom properties for theme support */
+
+/* =========================================================================
+   Theme definitions
+   ========================================================================= */
+
+/* Dark theme (default) */
+.aichatnav-theme-dark {
+  --aichatnav-panel-bg: rgba(30, 30, 30, 0.92);
+  --aichatnav-panel-border: rgba(255, 255, 255, 0.15);
+  --aichatnav-panel-text: #e0e0e0;
+  --aichatnav-panel-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --aichatnav-btn-bg: rgba(255, 255, 255, 0.1);
+  --aichatnav-btn-hover-bg: rgba(255, 255, 255, 0.25);
+  --aichatnav-btn-active-bg: rgba(255, 255, 255, 0.35);
+  --aichatnav-btn-hover-text: #fff;
+  --aichatnav-counter-text: #aaa;
+  --aichatnav-close-opacity: 0.5;
+  --aichatnav-mode-user-bg: rgba(59, 130, 246, 0.3);
+  --aichatnav-mode-user-text: #93bbfc;
+  --aichatnav-mode-ai-bg: rgba(168, 85, 247, 0.3);
+  --aichatnav-mode-ai-text: #c4a5f0;
+  --aichatnav-mode-both-bg: rgba(34, 197, 94, 0.3);
+  --aichatnav-mode-both-text: #86efac;
+  --aichatnav-highlight-outline: rgba(59, 130, 246, 0.6);
+  --aichatnav-highlight-flash: rgba(59, 130, 246, 0.08);
+}
+
+/* Light theme (site-matching) */
+.aichatnav-theme-light {
+  --aichatnav-panel-bg: rgba(255, 255, 255, 0.95);
+  --aichatnav-panel-border: rgba(0, 0, 0, 0.12);
+  --aichatnav-panel-text: #374151;
+  --aichatnav-panel-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --aichatnav-btn-bg: rgba(0, 0, 0, 0.05);
+  --aichatnav-btn-hover-bg: rgba(0, 0, 0, 0.1);
+  --aichatnav-btn-active-bg: rgba(0, 0, 0, 0.15);
+  --aichatnav-btn-hover-text: #111827;
+  --aichatnav-counter-text: #6b7280;
+  --aichatnav-close-opacity: 0.4;
+  --aichatnav-mode-user-bg: rgba(59, 130, 246, 0.12);
+  --aichatnav-mode-user-text: #2563eb;
+  --aichatnav-mode-ai-bg: rgba(168, 85, 247, 0.12);
+  --aichatnav-mode-ai-text: #7c3aed;
+  --aichatnav-mode-both-bg: rgba(34, 197, 94, 0.12);
+  --aichatnav-mode-both-text: #16a34a;
+  --aichatnav-highlight-outline: rgba(59, 130, 246, 0.5);
+  --aichatnav-highlight-flash: rgba(59, 130, 246, 0.05);
+}
+
+/* =========================================================================
+   Panel layout
+   ========================================================================= */
+
+#aichatnav-panel {
+  position: fixed;
+  bottom: 30px;
+  left: 20%;
+  /* Dynamic positioning overrides these via JS once input bar is found */
+  transition: left 0.3s ease, top 0.3s ease, bottom 0.3s ease, opacity 0.6s ease;
+  opacity: 0; /* Start hidden, JS fades in once page is ready */
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 5px 6px;
+  background: var(--aichatnav-panel-bg);
+  border: 1px solid var(--aichatnav-panel-border);
+  border-radius: 8px;
+  box-shadow: var(--aichatnav-panel-shadow);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
+  color: var(--aichatnav-panel-text);
+  backdrop-filter: blur(8px);
+  user-select: none;
+  max-width: 150px;
+}
+
+#aichatnav-panel:hover {
+  opacity: 1 !important;
+}
+
+/* Rows */
+.aichatnav-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+/* =========================================================================
+   Buttons
+   ========================================================================= */
+
+#aichatnav-panel button {
+  border: none;
+  background: var(--aichatnav-btn-bg);
+  color: var(--aichatnav-panel-text);
+  cursor: pointer;
+  border-radius: 3px;
+  padding: 3px 6px;
+  font-size: 11px;
+  line-height: 1;
+  transition: background 0.15s, color 0.15s;
+  min-width: 22px;
+  text-align: center;
+}
+
+#aichatnav-panel button:hover {
+  background: var(--aichatnav-btn-hover-bg);
+  color: var(--aichatnav-btn-hover-text);
+}
+
+#aichatnav-panel button:active {
+  background: var(--aichatnav-btn-active-bg);
+}
+
+/* First/Last (double arrow) buttons */
+#aichatnav-first,
+#aichatnav-last {
+  font-size: 9px;
+  padding: 3px 4px;
+}
+
+/* Up/Down arrow buttons */
+#aichatnav-up,
+#aichatnav-down {
+  font-size: 10px;
+  padding: 3px 5px;
+}
+
+/* Close button */
+#aichatnav-close {
+  font-size: 12px;
+  padding: 2px 4px;
+  opacity: var(--aichatnav-close-opacity);
+}
+
+#aichatnav-close:hover {
+  opacity: 1;
+}
+
+/* Expand/collapse toggle (vertical ellipsis) */
+#aichatnav-expand-toggle {
+  font-size: 12px;
+  padding: 2px 3px;
+  min-width: 16px;
+  opacity: var(--aichatnav-close-opacity);
+  line-height: 1;
+}
+
+#aichatnav-expand-toggle:hover {
+  opacity: 1;
+}
+
+/* Mode button */
+#aichatnav-mode {
+  font-weight: 600;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 2px 6px;
+  flex-shrink: 0;
+}
+
+/* Mode-specific colors */
+.aichatnav-mode-user {
+  background: var(--aichatnav-mode-user-bg) !important;
+  color: var(--aichatnav-mode-user-text) !important;
+}
+
+.aichatnav-mode-ai {
+  background: var(--aichatnav-mode-ai-bg) !important;
+  color: var(--aichatnav-mode-ai-text) !important;
+}
+
+.aichatnav-mode-both {
+  background: var(--aichatnav-mode-both-bg) !important;
+  color: var(--aichatnav-mode-both-text) !important;
+}
+
+/* Counter */
+#aichatnav-counter {
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  font-size: 11px;
+  color: var(--aichatnav-counter-text);
+  flex-grow: 1;
+}
+
+/* =========================================================================
+   Highlight effect on navigated-to messages
+   ========================================================================= */
+
+.aichatnav-highlight {
+  outline: 2px solid var(--aichatnav-highlight-outline) !important;
+  outline-offset: 2px;
+  border-radius: 4px;
+  transition: outline-color 0.3s;
+  animation: aichatnav-flash 1.5s ease-out;
+}
+
+@keyframes aichatnav-flash {
+  0% {
+    outline-color: var(--aichatnav-highlight-outline);
+    background-color: var(--aichatnav-highlight-flash);
+  }
+  100% {
+    outline-color: transparent;
+    background-color: transparent;
+  }
+}

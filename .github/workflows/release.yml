@@ -1,0 +1,85 @@
+name: Release
+
+on:
+  push:
+    tags: [ 'v*' ]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+
+    - name: Validate manifest.json
+      run: |
+        python3 -c "import json; json.load(open('src/manifest.json'))"
+
+    - name: Check JavaScript syntax
+      run: |
+        for f in src/*.js; do
+          node --check "$f"
+        done
+
+    - name: Check for debugger statements
+      run: |
+        if grep -r "debugger" src/ --include="*.js" | grep -v "//.*debugger"; then
+          echo "ERROR: debugger statements found"
+          exit 1
+        fi
+
+    - name: Verify version sync
+      run: python3 scripts/sync-versions.py --check --no-git-ver
+
+    - name: Validate extension package
+      run: python3 scripts/package.py --check
+
+    - name: Build extension package
+      run: python3 scripts/package.py --output dist
+
+    - name: Extract release notes from CHANGELOG
+      id: changelog
+      run: |
+        # Extract the section for this version from CHANGELOG.md
+        TAG="${GITHUB_REF#refs/tags/}"
+        echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+        # Convert tag to changelog version (v0.2.0a1 -> 0.2.0-alpha)
+        # This is a best-effort extraction
+        python3 -c "
+        import re, sys
+        tag = '$TAG'
+        content = open('CHANGELOG.md', encoding='utf-8').read()
+
+        # Find the first ## section after [Unreleased]
+        sections = re.split(r'^## ', content, flags=re.MULTILINE)
+        notes = ''
+        for section in sections[1:]:
+            if section.startswith('[Unreleased]'):
+                continue
+            # Take the first non-unreleased section as release notes
+            lines = section.split('\n')
+            header = lines[0]
+            body = '\n'.join(lines[1:]).strip()
+            if body:
+                notes = body
+                break
+
+        if notes:
+            print(notes)
+        else:
+            print('Release ' + tag)
+        " > release_notes.txt
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        body_path: release_notes.txt
+        files: dist/*.zip
+        draft: false
+        prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'rc') }}
