@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "AI ChatNav",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Navigate between user and AI messages in ChatGPT, Claude.ai, and other AI chat interfaces",
   "permissions": ["storage"],
   "action": {

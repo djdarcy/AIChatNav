@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [0.3.4-alpha] - 2026-04-02
+
+### Fixed
+- Release workflow: removed JS syntax checks and zip packaging (public repo has no JS source files)
+
 ## [0.3.3-alpha] - 2026-04-02
 
 ### Added
@@ -206,7 +211,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Versioning infrastructure adapted from wtf-restarted (sync-versions.py, git hooks)
 - Playwright test for widget layout validation
 
-[Unreleased]: https://github.com/djdarcy/aichatnav/compare/v0.3.3a1...HEAD
+[Unreleased]: https://github.com/djdarcy/aichatnav/compare/v0.3.4a1...HEAD
+[0.3.4-alpha]: https://github.com/djdarcy/aichatnav/compare/v0.3.3a1...v0.3.4a1
 [0.3.3-alpha]: https://github.com/djdarcy/aichatnav/compare/v0.3.2a1...v0.3.3a1
 [0.3.2-alpha]: https://github.com/djdarcy/aichatnav/compare/v0.3.1a1...v0.3.2a1
 [0.3.1-alpha]: https://github.com/djdarcy/aichatnav/compare/v0.3.0a1...v0.3.1a1
