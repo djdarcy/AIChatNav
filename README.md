@@ -1,6 +1,6 @@
 # AI ChatNav
 
-[![Chrome Extension](https://img.shields.io/badge/chrome-extension-blue.svg)](https://github.com/djdarcy/aichatnav)
+[![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-Install-blue.svg)](https://chromewebstore.google.com/detail/ai-chatnav/edplgflcieggamnnoecdpckjjhpjlbim)
 [![Manifest V3](https://img.shields.io/badge/manifest-v3-green.svg)](src/manifest.json)
 [![Platform](https://img.shields.io/badge/platform-Chromium-blue.svg)](docs/keyboard-shortcuts.md)
 
@@ -14,13 +14,9 @@ Long AI chat conversations require tedious scrolling to find specific user promp
 
 ## Quick Start
 
-1. Clone this repo
-2. Open Chrome and go to `chrome://extensions/`
-3. Enable **Developer mode** (top-right toggle)
-4. Click **Load unpacked** and select the `src/` directory
-5. Navigate to ChatGPT or Claude.ai
+**[Install AI ChatNav from the Chrome Web Store](https://chromewebstore.google.com/detail/ai-chatnav/edplgflcieggamnnoecdpckjjhpjlbim)** -- one click, works on Chrome, Edge, and all Chromium browsers.
 
-That's it. A compact widget appears near the text input bar:
+That's it. Navigate to ChatGPT or Claude.ai, and a compact widget should appear near the text input bar:
 
 &nbsp;&nbsp;&nbsp;&nbsp;<img src="docs/images/widget-closeup-light.png" alt="AI ChatNav widget (light theme)" height="48"> &nbsp;&nbsp; <img src="docs/images/widget-closeup-dark.png" alt="AI ChatNav widget (dark theme)" height="48">
 
@@ -68,18 +64,18 @@ The selector config makes it straightforward to add new sites -- just add the ho
 
 ## Installation
 
-### Chrome / Edge / Chromium (Developer Mode)
+### Chrome Web Store (Recommended)
+
+**[Install AI ChatNav](https://chromewebstore.google.com/detail/ai-chatnav/edplgflcieggamnnoecdpckjjhpjlbim)** -- works on Chrome, Edge, Brave, Opera, and all Chromium browsers.
+
+### Developer Mode
 
 ```bash
 git clone https://github.com/djdarcy/aichatnav.git
 cd aichatnav
 ```
 
-Then load `src/` as an unpacked extension in `chrome://extensions/`.
-
-### Chrome Web Store
-
-Coming soon.
+Then load `src/` as an unpacked extension in `chrome://extensions/` with Developer mode enabled.
 
 ## Development
 
@@ -145,7 +141,7 @@ python scripts/sync-versions.py
 - [x] Proper extension icons
 - [ ] Gemini support
 - [ ] Firefox support
-- [ ] Chrome Web Store release
+- [x] Chrome Web Store release
 
 See [ROADMAP.md](ROADMAP.md) for the full phased plan, or track progress on [issue #1](https://github.com/djdarcy/aichatnav/issues/1).
 

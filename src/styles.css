@@ -57,8 +57,7 @@
   position: fixed;
   bottom: 30px;
   left: 20%;
-  /* Dynamic positioning overrides these via JS once input bar is found */
-  transition: left 0.3s ease, top 0.3s ease, bottom 0.3s ease, opacity 0.6s ease;
+  transition: opacity 0.4s ease;
   opacity: 0; /* Start hidden, JS fades in once page is ready */
   z-index: 99999;
   display: flex;
@@ -180,13 +179,23 @@
   color: var(--aichatnav-mode-both-text) !important;
 }
 
-/* Counter */
+/* Counter (clickable -- scrolls to current position) */
 #aichatnav-counter {
   font-variant-numeric: tabular-nums;
   text-align: center;
   font-size: 11px;
   color: var(--aichatnav-counter-text);
   flex-grow: 1;
+  cursor: pointer;
+}
+
+#aichatnav-counter:hover {
+  color: var(--aichatnav-btn-hover-text);
+}
+
+/* Follow mode indicator -- green tint when tracking conversation tail */
+#aichatnav-counter.aichatnav-following {
+  color: var(--aichatnav-mode-both-text);
 }
 
 /* =========================================================================

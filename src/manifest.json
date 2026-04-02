@@ -1,9 +1,16 @@
 {
   "manifest_version": 3,
   "name": "AI ChatNav",
-  "version": "0.2.3",
+  "version": "0.3.3",
   "description": "Navigate between user and AI messages in ChatGPT, Claude.ai, and other AI chat interfaces",
-  "permissions": ["activeTab", "storage"],
+  "permissions": ["storage"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "48": "icons/icon-48.png"
+    }
+  },
   "options_page": "options.html",
   "icons": {
     "16": "icons/icon-16.png",
@@ -19,7 +26,7 @@
       ],
       "js": ["content.js"],
       "css": ["styles.css"],
-      "run_at": "document_idle"
+      "run_at": "document_end"
     }
   ]
 }

@@ -6,6 +6,121 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [0.3.3-alpha] - 2026-04-02
+
+### Added
+- Viewport-relative navigation: Alt+Up/Down navigates from where you're looking (#25)
+- Smart detection: re-anchors to viewport when user scrolls away, then navigates
+  sequentially from the detected position
+- Partial visibility handling: if a message is partially scrolled off, navigates to
+  show its top/bottom before moving to prev/next
+- Navigation anchor setting in full options page (viewport / fixed)
+- Boundary overflow: Alt+Down at N/N scrolls to absolute bottom, Alt+Up at 1/N
+  scrolls to absolute top
+
+### Fixed
+- Long messages no longer block Alt+Down navigation (viewport detection checked
+  element visibility instead of distance from viewport center)
+- Viewport re-detection skipped when current element is still visible on screen
+
+### Changed
+- Navigation anchor dropdown moved to full options page only (popup was overflowing
+  Chrome's 600px height cap)
+- Default navigation anchor set to "viewport" for intuitive first-time experience
+
+## [0.3.2-alpha] - 2026-04-01
+
+### Added
+- Ctrl+Up/Down arrow navigation (ctrlArrowNav setting, default ON)
+- Non-conflicting Ctrl+arrows work alongside Alt+arrows in all keyboard modes
+- Checkbox in options page and popup to disable if conflicts with other extensions
+
+### Changed
+- Popup footer condensed: "Full Settings" folded into bottom link line, eliminates scrollbar
+
+## [0.3.1-alpha] - 2026-03-23
+
+### Added
+- Conversation follow-mode with three tracking policies (#22):
+  - Follow (snaps back on new message) -- default
+  - Follow (stop when navigating away)
+  - Manual only (never auto-advance)
+- Previous position memory: Alt+Backspace swaps between current and saved position
+- Scroll to current position: Alt+G or click the counter
+- Follow indicator: green down-arrow on counter when tracking conversation tail
+- Position tracking settings in options page and popup
+- Keyboard mode setting: Full (all shortcuts) or Minimal (Alt+Up/Down only)
+- Minimal mode grays out unavailable shortcuts in popup with strikethrough
+- Position history stack with undo/redo (Alt+Backspace / Ctrl+Alt+Backspace)
+- Keyboard shortcuts table in popup uses two-column paired layout
+
+### Fixed
+- Follow mode prevCount captured before injectPanel() to detect message count changes
+- navigateLast() no longer immediately detaches follow mode (keepFollowing parameter)
+- React re-render position preservation: _lastKnownIndex prevents jumping to last message
+  when DOM nodes are replaced and follow mode is off
+
+### Changed
+- Popup width increased to 340px for two-column shortcut layout
+- Follow policy dropdown wording: descriptive labels without first-person pronouns
+- Removed "Always follow" policy (redundant, prevented useful navigation)
+- Position memory upgraded from single slot to stack with 2s grouping (rapid navigation = one entry)
+
+## [0.3.0-alpha] - 2026-03-22
+
+### Added
+- Toolbar popup with settings, keyboard shortcut reference, and links (#13)
+- Keyboard only mode: hides widget, all shortcuts still work (Alt+H toggles back)
+- Progressive top/bottom navigation: repeated Ctrl+Alt+Up/Down goes deeper (#19)
+  - Level 0: first/last of current mode
+  - Level 1: true first/last of any type (User/AI modes only)
+  - Level 2: absolute page top/bottom
+  - Auto-skips redundant levels, works in all modes
+- Buy Me a Coffee and scarcityhypothesis.org links in popup and options page
+- "Project page" and "Report issues" links in popup footer
+- Keyboard only mode setting in popup, options page, and content script
+
+### Fixed
+- Initial position defaults to last message (pages load at bottom)
+- First navigation scrolls to current position instead of jumping away
+- Null guard on compareDocumentPosition for race conditions
+- React re-render DOM node replacement handled gracefully
+- Options page spacing tightened, footer gap reduced
+
+### Changed
+- Default mode changes in popup/settings immediately update active widget
+- Store listing rewritten with FAQ, how-to-use, and plain text formatting
+
+## [0.2.4-alpha] - 2026-03-22
+
+### Added
+- World-coordinate navigation: tracks DOM elements as source of truth, not indices
+- Direction-aware mode switching: Alt+Up finds previous message, Alt+Down finds next
+- Approximate position indicator (~N/M) when at a message not in the current mode's set
+- Widget hides when no messages exist, truly invisible (pointer-events: none)
+- pushState/replaceState interception for instant SPA navigation detection
+
+### Fixed
+- Removed unused `activeTab` permission that caused Chrome Web Store rejection
+- Mode switch now preserves position continuity in conversation flow (#18)
+- Widget no longer flickers when switching between conversations (chat-to-chat stays visible)
+- Widget no longer clips behind sidebar (hybrid fixed positioning with input bar tracking)
+- Live counter updates every 1s as new messages appear during conversation (#11)
+- Widget appears within ~1-2 seconds (was 5-7 seconds) matching competitor extensions (#12)
+
+### Changed
+- Permissions reduced to `storage` only (content scripts don't need activeTab)
+- Navigation architecture: `state.currentElement` replaces `state.currentIndex` as source of truth
+- `run_at` changed from `document_idle` to `document_end` for earlier script execution
+- Removed arbitrary 5s/2s load delay -- polls immediately for input bar
+- Reposition interval reduced from 3s to 1s for more responsive widget tracking
+- Removed old `repositionPanel()` -- replaced by `injectPanel()` with hybrid positioning
+- Options page: tighter spacing, Buy Me a Coffee button in footer
+- Updated logo and added scripts/resize-icons.py for automated icon generation
+- Store listing rewritten with FAQ, how-to-use, and Buy Me a Coffee link
+- New main screenshot for Chrome Web Store
+- Privacy policy footer: removed "open source" claim
+
 ## [0.2.3-alpha] - 2026-03-18
 
 ### Added
@@ -91,7 +206,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Versioning infrastructure adapted from wtf-restarted (sync-versions.py, git hooks)
 - Playwright test for widget layout validation
 
-[Unreleased]: https://github.com/djdarcy/aichatnav/compare/v0.2.3a1...HEAD
+[Unreleased]: https://github.com/djdarcy/aichatnav/compare/v0.3.3a1...HEAD
+[0.3.3-alpha]: https://github.com/djdarcy/aichatnav/compare/v0.3.2a1...v0.3.3a1
+[0.3.2-alpha]: https://github.com/djdarcy/aichatnav/compare/v0.3.1a1...v0.3.2a1
+[0.3.1-alpha]: https://github.com/djdarcy/aichatnav/compare/v0.3.0a1...v0.3.1a1
+[0.3.0-alpha]: https://github.com/djdarcy/aichatnav/compare/v0.2.4a1...v0.3.0a1
+[0.2.4-alpha]: https://github.com/djdarcy/aichatnav/compare/v0.2.3a1...v0.2.4a1
 [0.2.3-alpha]: https://github.com/djdarcy/aichatnav/compare/v0.2.2a1...v0.2.3a1
 [0.2.2-alpha]: https://github.com/djdarcy/aichatnav/compare/v0.2.1a1...v0.2.2a1
 [0.2.1-alpha]: https://github.com/djdarcy/aichatnav/compare/v0.2.0a1...v0.2.1a1

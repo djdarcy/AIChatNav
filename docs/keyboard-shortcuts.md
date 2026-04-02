@@ -10,6 +10,11 @@ All shortcuts use the Alt modifier key.
 | Ctrl+Alt+J / Ctrl+Alt+Down | Jump to last message |
 | Alt+M | Cycle mode (User -> AI -> Both) |
 | Alt+H | Toggle panel visibility |
+| Alt+O | Expand/collapse current message |
+| Ctrl+Alt+O | Toggle auto-expand + expand/collapse all |
+| Alt+G | Scroll to current tracked position |
+| Alt+Backspace | Undo navigation (go back in position history) |
+| Ctrl+Alt+Backspace | Redo navigation (go forward in position history) |
 
 ## Supported Platforms
 
